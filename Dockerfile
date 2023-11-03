@@ -23,6 +23,7 @@ RUN yum install -y gcc \
         libxslt-devel \
         libffi-devel \
         graphviz \
+	openldap-devel \
         openssl-devel \
         redhat-rpm-config \
         openldap-devel \
