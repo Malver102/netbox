@@ -44,7 +44,8 @@ COPY nginx.conf /etc/nginx/nginx.conf
 #Install PIP3 (PYTHON) dependencies
 RUN python3 /opt/pip/get-pip.py \
 	&& pip3 install -r /opt/netbox/requirements.txt \
-	&& pip3 install napalm django-auth-ldap uwsgi 
+	&& pip3 install napalm django-auth-ldap uwsgi \
+ 	&& pip3 install python-ldap 
 
 RUN python3 /opt/netbox/netbox/manage.py collectstatic --no-input
 	
