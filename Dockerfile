@@ -10,7 +10,7 @@
 FROM centos:7
 
 # Maintained be
-MAINTAINER smacktrace <smacktrace942@gmail.com>
+MAINTAINER suchy <suchy102@gmail.com>
 
 #Dependencies
 RUN yum install -y epel-release
