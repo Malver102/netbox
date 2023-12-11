@@ -1,5 +1,9 @@
 FROM ubuntu 
 
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+
 RUN apt update \
         && install -y git postgresql redis-server python3 python3-pip \
          python3-venv python3-dev build-essential libxml2-dev libxslt1-dev \
