@@ -13,7 +13,7 @@ RUN apt update \
          python3-venv python3-dev build-essential libxml2-dev libxslt1-dev \
          libffi-dev libpq-dev libssl-dev zlib1g-dev nginx
 
-
+COPY config/pg_hba.conf /etc/postgresql/14/main/pg_hba.conf
 
 RUN service postgresql start \
     && service redis-server start
@@ -22,10 +22,6 @@ RUN pip config set global.trusted-host "pypi.org files.pythonhosted.org pypi.pyt
 
 COPY config/psql.sh /
 RUN chmod +x /psql.sh 
-
-COPY config/pg_hba.conf /etc/postgresql/14/main/pg_hba.conf
-RUN service postgresql restart
-
 RUN /bin/bash -c "/psql.sh" 
 
 RUN cd /opt \
