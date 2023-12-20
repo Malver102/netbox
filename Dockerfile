@@ -16,8 +16,8 @@ RUN apt update \
 RUN cd /opt \
     && git clone -b master https://github.com/netbox-community/netbox.git \
     && cd /opt/netbox \
-    && cp /opt/netbox/contrib/nginx.conf /etc/nginx/sites-available/default \
-    && service nginx restart
+    && cp /opt/netbox/contrib/nginx.conf /etc/nginx/sites-available/default 
+    
 
 COPY config/configueation.py cd /opt/netbox/netbox/netbox/ 
 
@@ -52,7 +52,7 @@ RUN python -c "import django; django.setup(); \
    username='$DJANGO_SU_NAME', \
    email='$DJANGO_SU_EMAIL', \
    password='$DJANGO_SU_PASSWORD')"
-
+   
 COPY config/run.sh /
 
 RUN chmod +x /run.sh
