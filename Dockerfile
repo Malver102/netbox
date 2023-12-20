@@ -31,10 +31,7 @@ RUN adduser --system --group netbox \
 
 COPY config/pg_hba.conf /etc/postgresql/14/main/pg_hba.conf
 
-RUN cat /etc/postgresql/14/main/pg_hba.conf
-
-RUN service postgresql start \
-    && service redis-server start
+RUN service redis-server start
 
 RUN pip config set global.trusted-host "pypi.org files.pythonhosted.org pypi.python.org"
 
