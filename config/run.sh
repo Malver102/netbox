@@ -1,5 +1,5 @@
 
-service postgres restart 
+service postgresql restart 
 service redis-server restart
 service nginx restart
 
