@@ -1,8 +1,8 @@
 #!/bin/bash
 
-DB_NAME="netbox_db"
-DB_USER="netbox"
-DB_USER_PASS="netbox"
+DB_NAME=netbox_db
+DB_USER=netbox
+DB_USER_PASS=netbox
 
 service postgresql start
 
