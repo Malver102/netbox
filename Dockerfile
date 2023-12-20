@@ -15,6 +15,9 @@ RUN apt update \
 
 COPY config/pg_hba.conf /etc/postgresql/14/main/pg_hba.conf
 
+RUN chown -R postgres:postgres /etc/postgres
+
+
 RUN service postgresql start \
     && service redis-server start
 
