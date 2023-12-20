@@ -9,7 +9,7 @@ ENV DJANGO_SU_PASSWORD=qwe123!@#
 
 
 RUN apt update \
-        && install -y git postgresql redis-server python3 python3-pip \
+        && apt install -y git postgresql redis-server python3 python3-pip \
          python3-venv python3-dev build-essential libxml2-dev libxslt1-dev \
          libffi-dev libpq-dev libssl-dev zlib1g-dev nginx
 
