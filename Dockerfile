@@ -19,7 +19,7 @@ RUN cd /opt \
     && cp /opt/netbox/contrib/nginx.conf /etc/nginx/sites-available/default 
     
 
-COPY config/configueation.py cd /opt/netbox/netbox/netbox/ 
+COPY config/configueation.py cd /opt/netbox/netbox/
 
 RUN adduser --system --group netbox \
     && chown --recursive netbox /opt/netbox/netbox/media/ \
@@ -52,7 +52,7 @@ RUN python -c "import django; django.setup(); \
    username='$DJANGO_SU_NAME', \
    email='$DJANGO_SU_EMAIL', \
    password='$DJANGO_SU_PASSWORD')"
-   
+
 COPY config/run.sh /
 
 RUN chmod +x /run.sh
