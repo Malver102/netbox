@@ -39,7 +39,7 @@ COPY config/psql.sh /
 RUN chmod +x /psql.sh 
 RUN /bin/bash -c "/psql.sh" 
 
-RUN ./upgrade.sh
+RUN /opt/netbox/upgrade.sh
 
 ENV PATH="/opt/netbox/venv/bin:$PATH"
 
