@@ -13,10 +13,25 @@ RUN apt update \
          python3-venv python3-dev build-essential libxml2-dev libxslt1-dev \
          libffi-dev libpq-dev libssl-dev zlib1g-dev nginx
 
+RUN cd /opt \
+    && git clone -b master https://github.com/netbox-community/netbox.git \
+    && cd /opt/netbox \
+    && cp /opt/netbox/contrib/nginx.conf /etc/nginx/sites-available/default \
+    && service nginx restart
+
+COPY config/configueation.py cd /opt/netbox/netbox/netbox/ 
+
+RUN adduser --system --group netbox \
+    && chown --recursive netbox /opt/netbox/netbox/media/ \
+    && chown --recursive netbox /opt/netbox/netbox/reports/ \
+    && chown --recursive netbox /opt/netbox/netbox/scripts/ \
+    && chown -R postgres:postgres /etc/postgresql \
+    && chown -R netbox:netbox /opt/netbox \
+    && chmod 774 /opt/netbox
+
 COPY config/pg_hba.conf /etc/postgresql/14/main/pg_hba.conf
 
-RUN chown -R postgres:postgres /etc/postgresql
-
+RUN cat /etc/postgresql/14/main/pg_hba.conf
 
 RUN service postgresql start \
     && service redis-server start
@@ -27,26 +42,9 @@ COPY config/psql.sh /
 RUN chmod +x /psql.sh 
 RUN /bin/bash -c "/psql.sh" 
 
-RUN cd /opt \
-    && git clone -b master https://github.com/netbox-community/netbox.git \
-    && cd /opt/netbox \
-    && cp /opt/netbox/contrib/nginx.conf /etc/nginx/sites-available/default \
-    && service nginx restart
-
-COPY config/configueation.py cd /opt/netbox/netbox/netbox/ 
-    
-
-RUN adduser --system --group netbox \
-    && chown --recursive netbox /opt/netbox/netbox/media/ \
-    && chown --recursive netbox /opt/netbox/netbox/reports/ \
-    && chown --recursive netbox /opt/netbox/netbox/scripts/
-
 RUN ./upgrade.sh
 
 ENV PATH="/opt/netbox/venv/bin:$PATH"
-
-RUN chown -R netbox:netbox /opt/netbox \
-    && chmod 774 /opt/netbox
 
 RUN python -c "import django; django.setup(); \
    from django.contrib.auth.management.commands.createsuperuser import get_user_model; \
