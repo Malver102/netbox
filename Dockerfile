@@ -19,8 +19,8 @@ RUN service postgresql start \
 RUN pip config set global.trusted-host "pypi.org files.pythonhosted.org pypi.python.org"
 
 COPY config/psql.sh /
-RUN chmod +x /psql.sh \
-    && /bin/bash -c "/psql.sh" 
+RUN chmod +x /psql.sh 
+RUN /bin/bash -c "/psql.sh" 
 
 RUN cd /opt \
     && git clone -b master https://github.com/netbox-community/netbox.git \
