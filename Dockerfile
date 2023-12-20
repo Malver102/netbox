@@ -2,26 +2,58 @@ FROM ubuntu
 
 
 ENV DEBIAN_FRONTEND=noninteractive
+ENV DJANGO_DB_NAME=default
+ENV DJANGO_SU_NAME=admin
+ENV DJANGO_SU_EMAIL=admin@my.company
+ENV DJANGO_SU_PASSWORD=qwe123!@#
 
 
 RUN apt update \
         && install -y git postgresql redis-server python3 python3-pip \
          python3-venv python3-dev build-essential libxml2-dev libxslt1-dev \
-         libffi-dev libpq-dev libssl-dev zlib1g-dev
+         libffi-dev libpq-dev libssl-dev zlib1g-dev nginx
 
+RUN service postgres start \
+    && service redis-server start
 
-RUN mkdir -p /opt/netbox \
-    && cd /opt/netbox
+RUN pip config set global.trusted-host "pypi.org files.pythonhosted.org pypi.python.org"
 
-RUN git clone -b master https://github.com/netbox-community/netbox.git .
+COPY config/psql.sh /
+RUN chmod +x /psql.sh \
+    && /psql.sh 
+
+RUN cd /opt \
+    && git clone -b master https://github.com/netbox-community/netbox.git \
+    && cd /opt/netbox \
+    && cp /opt/netbox/contrib/nginx.conf /etc/nginx/sites-available/default \
+    && service nginx restart
+
+COPY config/configueation.py cd /opt/netbox/netbox/netbox/ 
+    
 
 RUN adduser --system --group netbox \
     && chown --recursive netbox /opt/netbox/netbox/media/ \
     && chown --recursive netbox /opt/netbox/netbox/reports/ \
     && chown --recursive netbox /opt/netbox/netbox/scripts/
 
-COPY config/configueation.py cd /opt/netbox/netbox/netbox/
+RUN ./upgrade.sh
 
-RUN cp /opt/netbox/contrib/gunicorn.py /opt/netbox/gunicorn.py
+ENV PATH="/opt/netbox/venv/bin:$PATH"
 
-RUN python3 /opt/netbox/upgrade.sh
+RUN chown -R netbox:netbox /opt/netbox \
+    && chmod 774 /opt/netbox
+
+RUN python -c "import django; django.setup(); \
+   from django.contrib.auth.management.commands.createsuperuser import get_user_model; \
+   get_user_model()._default_manager.db_manager('$DJANGO_DB_NAME').create_superuser( \
+   username='$DJANGO_SU_NAME', \
+   email='$DJANGO_SU_EMAIL', \
+   password='$DJANGO_SU_PASSWORD')"
+
+COPY config/run.sh /
+
+RUN chmod +x /run.sh
+
+EXPOSE 80
+ENTRYPOINT [ "/bin/bash" ]
+CMD [ "/run.sh" ]
