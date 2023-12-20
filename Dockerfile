@@ -13,6 +13,8 @@ RUN apt update \
          python3-venv python3-dev build-essential libxml2-dev libxslt1-dev \
          libffi-dev libpq-dev libssl-dev zlib1g-dev nginx
 
+COPY config/pg_hba.conf /etc/postgresql/14/main/
+
 RUN service postgresql start \
     && service redis-server start
 
