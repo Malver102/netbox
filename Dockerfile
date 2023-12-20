@@ -20,7 +20,7 @@ RUN pip config set global.trusted-host "pypi.org files.pythonhosted.org pypi.pyt
 
 COPY config/psql.sh /
 RUN chmod +x /psql.sh \
-    && /psql.sh 
+    && /bin/bash -c "/psql.sh" 
 
 RUN cd /opt \
     && git clone -b master https://github.com/netbox-community/netbox.git \
@@ -54,6 +54,6 @@ COPY config/run.sh /
 
 RUN chmod +x /run.sh
 
-EXPOSE 80
+EXPOSE 8001
 ENTRYPOINT [ "/bin/bash" ]
 CMD [ "/run.sh" ]
