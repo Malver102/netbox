@@ -19,7 +19,7 @@ RUN cd /opt \
     && cp /opt/netbox/contrib/nginx.conf /etc/nginx/sites-available/default 
     
 
-COPY config/configueation.py cd /opt/netbox/netbox/
+COPY config/configuration.py cd /opt/netbox/netbox/
 
 RUN adduser --system --group netbox \
     && chown --recursive netbox /opt/netbox/netbox/media/ \
