@@ -62,5 +62,5 @@ COPY config/run.sh /
 
 EXPOSE 8001
 ENTRYPOINT [ "/bin/bash" ]
-#CMD [ "/run.sh" ]
+CMD [ "/run.sh" ]
 
