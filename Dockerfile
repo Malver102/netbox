@@ -37,15 +37,14 @@ COPY config/psql.sh /
 RUN chmod +x /psql.sh 
 RUN /bin/bash -c "/psql.sh" 
 
-RUN service redis-server start \
-    && service postgresql start
+RUN service redis-server start
 
 ENV PATH="/opt/netbox/venv/bin:$PATH"
 
 RUN pip config set global.trusted-host "pypi.org files.pythonhosted.org pypi.python.org"
 
 
-
+RUN /etc/init.d/postgresql restart
 RUN /opt/netbox/upgrade.sh
 
 
