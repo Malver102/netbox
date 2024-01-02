@@ -33,17 +33,18 @@ COPY config/pg_hba.conf /etc/postgresql/14/main/pg_hba.conf
 
 RUN service redis-server start
 
+ENV PATH="/opt/netbox/venv/bin:$PATH"
+
 RUN pip config set global.trusted-host "pypi.org files.pythonhosted.org pypi.python.org"
 
 COPY config/psql.sh /
 RUN chmod +x /psql.sh 
 RUN /bin/bash -c "/psql.sh" 
 
-WORKDIR /opt/netbox
-COPY config/upgrade.sh /opt/netbox/
-#RUN /opt/netbox/upgrade.sh
+#COPY config/upgrade.sh /opt/netbox/
+RUN /opt/netbox/upgrade.sh
 
-ENV PATH="/opt/netbox/venv/bin:$PATH"
+
 
 RUN /opt/netbox/venv/bin/python -c "import django; django.setup(); \
    from django.contrib.auth.management.commands.createsuperuser import get_user_model; \
