@@ -95,7 +95,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Base URL path if accessing NetBox within a directory. For example, if installed at https://example.com/netbox/, set:
 # BASE_PATH = 'netbox/'
-BASE_PATH = ''
+BASE_PATH = '/opt/netbox'
 
 # API Cross-Origin Resource Sharing (CORS) settings. If CORS_ORIGIN_ALLOW_ALL is set to True, all origins will be
 # allowed. Otherwise, define a list of allowed origins using either CORS_ORIGIN_WHITELIST or
