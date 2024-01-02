@@ -45,6 +45,8 @@ RUN pip config set global.trusted-host "pypi.org files.pythonhosted.org pypi.pyt
 
 
 RUN /etc/init.d/postgresql restart
+RUN service postgresql status
+
 RUN /opt/netbox/upgrade.sh
 
 
