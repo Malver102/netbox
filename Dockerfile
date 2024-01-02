@@ -29,7 +29,7 @@ RUN adduser --system --group netbox \
     && chown -R netbox:netbox /opt/netbox \
     && chmod 774 /opt/netbox
 
-COPY config/pg_hba.conf /etc/postgresql/14/main/pg_hba.conf
+#COPY config/pg_hba.conf /etc/postgresql/14/main/pg_hba.conf
 #COPY config/postgresql.conf /etc/postgresql/14/main/
 
 
