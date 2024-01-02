@@ -42,7 +42,7 @@ RUN chmod +x /psql.sh
 RUN /bin/bash -c "/psql.sh" 
 
 #COPY config/upgrade.sh /opt/netbox/
-RUN /opt/netbox/upgrade.sh
+#RUN /opt/netbox/upgrade.sh
 
 
 
