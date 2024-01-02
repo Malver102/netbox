@@ -41,17 +41,16 @@ COPY config/psql.sh /
 RUN chmod +x /psql.sh 
 RUN /bin/bash -c "/psql.sh" 
 
-#COPY config/upgrade.sh /opt/netbox/
-#RUN /opt/netbox/upgrade.sh
+RUN /opt/netbox/upgrade.sh
 
 
 
-RUN python3 -c "import django; django.setup(); \
-   from django.contrib.auth.management.commands.createsuperuser import get_user_model; \
-   get_user_model()._default_manager.db_manager('$DJANGO_DB_NAME').create_superuser( \
-   username='$DJANGO_SU_NAME', \
-   email='$DJANGO_SU_EMAIL', \
-   password='$DJANGO_SU_PASSWORD')"
+#RUN python3 -c "import django; django.setup(); \
+#   from django.contrib.auth.management.commands.createsuperuser import get_user_model; \
+#   get_user_model()._default_manager.db_manager('$DJANGO_DB_NAME').create_superuser( \
+#   username='$DJANGO_SU_NAME', \
+#   email='$DJANGO_SU_EMAIL', \
+#   password='$DJANGO_SU_PASSWORD')"
 
 COPY config/run.sh /
 
