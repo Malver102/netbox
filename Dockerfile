@@ -61,5 +61,7 @@ COPY config/run.sh /
 RUN chmod +x /run.sh
 
 EXPOSE 8001
-ENTRYPOINT [ "/bin/bash" ]
-CMD [ "/run.sh" ]
+#ENTRYPOINT [ "/bin/bash" ]
+#CMD [ "/run.sh" ]
+
+CMD [ "/bin/bash" ]
