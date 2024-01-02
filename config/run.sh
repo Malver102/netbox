@@ -1,7 +1,7 @@
 
 service postgresql restart 
 service redis-server restart
-service nginx start
+#service nginx start
 
 
 #/opt/netbox/venv/bin/python3 /opt/netbox/netbox/manage.py housekeeping
