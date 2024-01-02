@@ -40,12 +40,12 @@ RUN chmod +x /psql.sh
 RUN /bin/bash -c "/psql.sh" 
 
 WORKDIR /opt/netbox
-
-#RUN /opt/netbox/upgrade.sh
+COPY config/upgrade.sh /opt/netbox/
+RUN /opt/netbox/upgrade.sh
 
 ENV PATH="/opt/netbox/venv/bin:$PATH"
 
-RUN python -c "import django; django.setup(); \
+RUN /opt/netbox/venv/bin/python -c "import django; django.setup(); \
    from django.contrib.auth.management.commands.createsuperuser import get_user_model; \
    get_user_model()._default_manager.db_manager('$DJANGO_DB_NAME').create_superuser( \
    username='$DJANGO_SU_NAME', \
