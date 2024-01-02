@@ -44,9 +44,7 @@ ENV PATH="/opt/netbox/venv/bin:$PATH"
 RUN pip config set global.trusted-host "pypi.org files.pythonhosted.org pypi.python.org"
 
 
-RUN /etc/init.d/postgresql start
-RUN ls /var/log/
-
+RUN service postgresql start
 #RUN /opt/netbox/upgrade.sh
 
 
