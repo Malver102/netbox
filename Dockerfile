@@ -41,7 +41,7 @@ RUN /bin/bash -c "/psql.sh"
 
 WORKDIR /opt/netbox
 COPY config/upgrade.sh /opt/netbox/
-RUN /opt/netbox/upgrade.sh
+#RUN /opt/netbox/upgrade.sh
 
 ENV PATH="/opt/netbox/venv/bin:$PATH"
 
