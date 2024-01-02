@@ -35,7 +35,7 @@ RUN adduser --system --group netbox \
 
 COPY config/psql.sh /
 RUN chmod +x /psql.sh 
-#RUN /bin/bash -c "/psql.sh" 
+RUN /bin/bash -c "/psql.sh" 
 
 RUN service redis-server start
 
